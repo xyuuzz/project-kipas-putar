@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Comment extends Model
 {
     // use HasFactory;
-    protected $fillable = ["comment"];
+    protected $fillable = ["comment", "article_id"];
 
     // relasi dengan table user
     public function user() { // satu user dapat memiliki banyak comment di banyak artikel

@@ -58,7 +58,7 @@ Route::middleware('auth:api')->group(function ()
         // untuk menghapus Category
         Route::delete("delete/category/{category:slug}", [CategoryController::class, "destroy"]);
         // untuk mengupdate Category
-        Route::patch("update/category/{category:slug}", [CategoryController::class, "update"]);
+        // Route::patch("update/category/{category:slug}", [CategoryController::class, "update"]);
     });
 
 

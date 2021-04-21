@@ -25,7 +25,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "category" => "required|string"
+        ]);
+
+        Category::create([
+            'category' => $request->category,
+            'slug' => \Str::slug($request->category)
+        ]);
+
+        return response()->json(['status' => true], 200);
     }
 
     /**
@@ -48,7 +57,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+
     }
 
     /**
@@ -59,6 +68,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return response()->json(['status' => true], 200);
     }
 }

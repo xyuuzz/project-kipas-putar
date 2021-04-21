@@ -51,7 +51,7 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Profile $profile, ProfileRequest $request)
-    {
+    { // pada tahap production, tambahkan required pada ProfileRequest
         $data = $request->only("nama", "status");
         if( $foto = $request->file("foto_profil") )
         {
@@ -93,22 +93,4 @@ class ProfileController extends Controller
         //
     }
 
-
-    // To Update Profile User
-//     public function update(Profile $profile, ProfileRequest $request)
-//     // {
-//     //     // validate untuk form yang berhubungan dengan data table user
-//     //     $request->validate([
-//     //         "username" => "required|alpha_num",
-//     //         "password" => "required|alpha_num"
-//     //     ]);
-
-//     //     // update data profile table
-//     //     $profile->update($request->only("foto_profil", "status"));
-
-//     //     // update data user table
-//     //     $profile->user->update($request->only("password", "username"));
-
-//     //     return response()->json(["status" => true], 200);
-//     // }
 }
