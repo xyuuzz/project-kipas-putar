@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Middleware\MakeProfile;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{RegisterController, LoginController, LogoutController, ProfileController, ArticleController, CategoryController, CommentController};
+use App\Http\Controllers\{RegisterController, LoginController, LogoutController, ProfileController, ArticleController, CategoryController, CommentController, ArticleIndexController};
 
 
 /*
@@ -26,6 +26,13 @@ use App\Http\Controllers\{RegisterController, LoginController, LogoutController,
 Route::post("login", LoginController::class);
 // Untuk register
 Route::post("register", RegisterController::class);
+
+
+// Route Article
+Route::get("article/all", [ArticleIndexController::class, "index"]);
+// Route Show Article
+Route::get("article/{article:slug}", [ArticleIndexController::class, "show"]);
+
 
 Route::middleware('auth:api')->group(function ()
 {

@@ -14,3 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get("/", function() {
+    return response()->json(["status" => "tapi boong xixixixixixi"], 200);
+});
