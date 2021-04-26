@@ -6,6 +6,7 @@ use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -37,9 +38,10 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Profile $profile)
+    public function show(User $user)
     {
-        $data = $profile->get();
+        // Mengambil profile milik user
+        $data = $user->profile;
         return response()->json(compact("data"), 200);
     }
 

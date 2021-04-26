@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if(count(Category::where("category", $request->category)->get())) {
+            return response()->json(["status" => false], 200);
+        }
+
         $request->validate([
             "category" => "required|string"
         ]);
@@ -33,6 +38,7 @@ class CategoryController extends Controller
             'category' => $request->category,
             'slug' => \Str::slug($request->category)
         ]);
+
 
         return response()->json(['status' => true], 200);
     }
@@ -45,7 +51,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $data = $category->articles()->get();
+        return response()->json([compact("data"), "status" => true], 200);
     }
 
     /**
@@ -68,6 +75,12 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if(count($category->articles()->get())) {
+            $category->articles()->first()->comments()->delete();
+
+            $category->articles()->delete();
+        }
+
         $category->delete();
 
         return response()->json(['status' => true], 200);

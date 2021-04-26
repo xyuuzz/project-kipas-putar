@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Middleware\MakeProfile;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{RegisterController, LoginController, LogoutController, ProfileController, ArticleController, CategoryController, CommentController, ArticleIndexController};
+use App\Http\Controllers\{RegisterController, LoginController, LogoutController, ProfileController, ArticleController, CategoryController, CommentController, ArticleIndexController, TagController};
 
 
 /*
@@ -34,6 +34,17 @@ Route::get("article/all", [ArticleIndexController::class, "index"]);
 Route::get("article/{article:slug}", [ArticleIndexController::class, "show"]);
 
 
+// Route Komentar
+Route::get("article/comment/all/{article:slug}", [CommentController::class, "show"]);
+
+
+// Route Category
+Route::get("article/category/{category:slug}", [CategoryController::class, "show"]);
+
+// Route Tag
+Route::get("article/tag/{tag:slug}", [TagController::class, "show"]);
+
+
 Route::middleware('auth:api')->group(function ()
 {
     // Untuk Logout
@@ -43,13 +54,13 @@ Route::middleware('auth:api')->group(function ()
     // -------------------- PROFILE ---------------------- //
 
     // ke halaman profile user
-    Route::get("profile/user/{profile:slug}", [ProfileController::class, "show"]);
+    Route::get("profile/user/{user:slug}", [ProfileController::class, "show"]);
     // update profile user
-    Route::patch("profile/user/{profile:slug}", [ProfileController::class, "update"]);
+    Route::patch("profile/user/{user:slug}", [ProfileController::class, "update"]);
 
 
     // ------------------------- Article ------------------- //
-    Route::prefix("admin")->middleware(Admin::class)->group(function()
+    Route::prefix("admin")->group(function()
     {
         // untuk membuat Article
         Route::post("create/article", [ArticleController::class, "store"]);
@@ -81,7 +92,3 @@ Route::middleware('auth:api')->group(function ()
 
 
 });
-
-
-
-

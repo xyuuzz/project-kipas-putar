@@ -18,7 +18,7 @@ class Comment extends Model
     }
 
     // relasi dengan table article
-    public function article() { // satu article dapat memiliki banyak comment
+    public function articles() { // satu article dapat memiliki banyak comment
         return $this->belongsTo(Article::class);
     }
 }

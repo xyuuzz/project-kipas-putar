@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Database\Seeders\{UserSeeder, ArticleSeeder, CommentSeeder, ProfileSeeder, CategorySeeder};
+use Database\Seeders\{UserSeeder, ArticleSeeder, CommentSeeder, ProfileSeeder, CategorySeeder, TagSeeder};
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         $this->call(ArticleSeeder::class);
         $this->call(CommentSeeder::class);
+        $this->call(TagSeeder::class);
     }
 }

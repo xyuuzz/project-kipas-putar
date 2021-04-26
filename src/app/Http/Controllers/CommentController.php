@@ -15,7 +15,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -44,9 +44,10 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Article $article)
     {
-        //
+        $comments = $article->comments;
+        return response()->json(compact("comments"), 200);
     }
 
     /**
