@@ -1,0 +1,39 @@
+.card {
+  border: 1px solid var(--bs-dark);
+  background: #f9f8f8 !important;
+}
+
+.card:hover {
+  cursor: pointer;
+  transition: 0.3s all linear;
+  background-color: #fafafafa !important;
+}
+
+.cardWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.cardBody {
+  margin-right: -30px;
+}
+
+.cardIcon {
+  margin-right: -70px;
+  padding: 10px 0;
+  max-width: 100px !important;
+}
+
+.icon {
+  width: 70px !important;
+}
+
+@media (max-width: 991.98px) {
+  .cardBody {
+    margin-left: 15px;
+  }
+}
+
+@media (max-width: 767.98px) {
+}

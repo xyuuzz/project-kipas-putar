@@ -1,0 +1,20 @@
+/* khusus di scroll */
+.shrink {
+  background-color: white;
+  box-shadow: 0px -2px 25px rgb(189, 189, 189);
+}
+
+/* selalu terpasang */
+.navbar {
+  transition: all linear 0.2s;
+  padding: 10px !important;
+}
+
+.btnRadius {
+  border-radius: 12px !important;
+}
+
+.wrapNav {
+  margin-top: -8px;
+  margin-bottom: -8px;
+}

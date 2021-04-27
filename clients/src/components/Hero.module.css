@@ -1,0 +1,10 @@
+.idHero {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  color: #f0f0f0;
+  text-align: center;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  letter-spacing: 1.5px;
+}
