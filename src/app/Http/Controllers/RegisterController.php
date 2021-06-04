@@ -18,7 +18,7 @@ class RegisterController extends Controller
      */
     public function __invoke(UserRequest $request)
     {
-        sUser::create([
+        User::create([
             "name" => $request->name,
             "username" => $request->username,
             "email" => $request->email,
