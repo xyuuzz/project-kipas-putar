@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -20,19 +21,19 @@ class UserSeeder extends Seeder
                 "username" => "mauyu",
                 "slug" => \Str::slug("maulana yusuf"),
                 "email" => "maulanayuusuf023@gmail.com",
-                "password" => bcrypt("password")
+                "password" => Hash::make("password")
             ], [
                 "name" => "andi taulani",
                 "username" => "annli",
                 "slug" => \Str::slug("andi taulani"),
                 "email" => "mamamkawann@gmail.com",
-                "password" => bcrypt("password2")
+                "password" => Hash::make("password2")
             ], [
                 "name" => "akbar paul galih",
                 "username" => "pagabar",
                 "slug" => \Str::slug("akbar paul galih"),
                 "email" => "pagarmenjulangtinggi@gmail.com",
-                "password" => bcrypt("password3")
+                "password" => Hash::make("password3")
             ]
         ]);
 

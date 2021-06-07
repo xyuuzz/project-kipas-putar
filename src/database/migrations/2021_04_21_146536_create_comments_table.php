@@ -15,10 +15,10 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->foreignId("article_id")->constrained("articles");
-            $table->integer("user_id");
+            $table->foreignId("user_id")->constrained("users");
             $table->text("comment");
             $table->timestamps();
-
+            // ! primary key
             $table->primary(["user_id", "article_id"]);
         });
     }

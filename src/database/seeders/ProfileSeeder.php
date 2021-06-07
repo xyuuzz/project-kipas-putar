@@ -17,14 +17,15 @@ class ProfileSeeder extends Seeder
         $profiles = collect([
             [
                 "user_id" => 1,
-                "foto_profil" => "default.png",
+                "photo_profile" => "default.png",
+                "status" => "admin"
             ], [
                 "user_id" => 2,
-                "foto_profil" => "gantengbet.png",
+                "photo_profile" => "default.png",
                 "status" => "Pelajar"
             ], [
                 "user_id" => 3,
-                "foto_profil" => "default.png",
+                "photo_profile" => "default.png",
                 "status" => "Mahasiswa"
             ]
         ]);

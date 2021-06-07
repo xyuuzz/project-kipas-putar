@@ -12,7 +12,7 @@ class Category extends Model
     protected $fillable = ["category", "slug"];
 
     // relasi dengan table article
-    public function articles() { // satu category dapat memiliki banyak artikel
-        return $this->hasMany(Article::class);
+    public function article() { // satu category dapat memiliki banyak artikel
+        return $this->hasOne(Article::class);
     }
 }

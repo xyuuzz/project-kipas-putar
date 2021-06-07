@@ -17,7 +17,7 @@ class CommentSeeder extends Seeder
         $comments = collect([
             [
                 "article_id" => 1,
-                "user_id" => 1,
+                "user_id" => 2,
                 "comment" => "wah, bagus sekali article nya kakk"
             ], [
                 "article_id" => 2,
@@ -25,7 +25,7 @@ class CommentSeeder extends Seeder
                 "comment" => "bagian front end nya dirapiin lagi ya kakk:>"
             ], [
                 "article_id" => 2,
-                "user_id" => 1,
+                "user_id" => 2,
                 "comment" => "wahh, article nya kurang menarik yang ini kak, saran saya direvisi aja"
             ]
         ]);

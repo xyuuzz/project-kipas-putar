@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Article extends Model
 {
     // use HasFactory;
-    protected $fillable = ["category_id", "slug", "foto", "description"];
+    protected $fillable = ["user_id", "category_id", "slug", "thumbnail", "description"];
 
     // Relasi dengan table categorey
     public function category() { // satu article dapat memiliki banyak category
