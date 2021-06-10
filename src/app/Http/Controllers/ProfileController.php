@@ -2,34 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profile;
 use Illuminate\Http\Request;
+use App\Models\{User, Profile};
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
-use App\Models\User;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\ProfileResource;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $this->middleware("auth:api");
     }
 
     /**
@@ -40,9 +23,9 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
-        // Mengambil profile milik user
-        $data = $user->profile;
-        return response()->json(compact("data"), 200);
+        // * Mengambil profile milik user
+        $profile = $user->profile;
+        return response()->json(["content" => new ProfileResource($profile)]);
     }
 
     /**
@@ -52,47 +35,23 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Profile $profile, ProfileRequest $request)
-    { // pada tahap production, tambahkan required pada ProfileRequest
-        $data = $request->only("nama", "status");
-        if( $foto = $request->file("foto_profil") )
-        {
-            $nama_foto = uniqid() . ".$foto->extension()";
-            // Memasukan foto ke dalam storage
-            $store = $foto->storeAs("public/images/profiles", $nama_foto);
-            $data[] = $nama_foto;
-        }
-
-        // Masukan Data :
-        $profile->update([
-            "name" => $request->nama,
-            "status" => $request->status,
-            "foto_profil" => $nama_foto ?? "default.png"
-        ]);
-
-        // validate form milik user
-        $request->validate([
-            "username" => "alpha_num",
-            "password" => "required|alpha_num"
-        ]);
-
-        $profile->user()->update([
-            "username" => $request->username,
-            "password" => bcrypt($request->password)
-        ]);
-
-        return response()->json(["result" => true], 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function update(ProfileRequest $request, User $user)
     {
-        //
+        $request->validate();
+
+        $user->update([
+            "name" => $request?->name,
+            "email" => $request?->email,
+            "username" => $request?->username,
+            "password" => bcrypt($request?->password)
+        ]);
+        $user->profile()->update([
+            "status" => $request?->status,
+            "photo_profile" => $request?->photo_profile ?? $user->profile->photo_profile,
+            "hobi" => $request?->hobi,
+        ]);
+
+        return response()->json(["content" => new ProfileResource($user->profile)], 200);
     }
 
 }

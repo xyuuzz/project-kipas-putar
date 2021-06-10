@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\{Tag, Comment, Category};
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{Tag, Comment, Category, User};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Article extends Model
 {
     // use HasFactory;
-    protected $fillable = ["user_id", "category_id", "slug", "thumbnail", "description"];
+    protected $fillable = ["user_id", "category_id", "slug", "thumbnail", "description", "title"];
 
     // Relasi dengan table categorey
     public function category() { // satu article dapat memiliki banyak category
@@ -23,5 +23,9 @@ class Article extends Model
 
     public function tags() {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function user() {
+        return $this->belongsto(User::class);
     }
 }

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Str;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
-use App\Models\Profile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -18,19 +18,21 @@ class RegisterController extends Controller
      */
     public function __invoke(UserRequest $request)
     {
-        User::create([
+        
+        $request->validate();
+        $user = User::create([
             "name" => $request->name,
             "username" => $request->username,
             "email" => $request->email,
-            "password" => bcrypt($request->password)
+            "password" => Hash::make($request->password)
         ]);
 
-        Profile::create([
-            "foto_profil" => "default.png",
+        $user->profile()->create([
+            "photo_profile" => "default.png",
             "slug" => \Str::slug($user->name),
-            "user_id" => $user->id
         ]);
 
-        return response()->json("Berhasil Mendaftar");
+        $token = Auth::attempt($request->only("username", "password"));
+        return response()->json(compact("token"));
     }
 }

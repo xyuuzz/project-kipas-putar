@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Profile;
+use App\Models\{Profile, Comment, Article};
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -53,6 +52,10 @@ class User extends Authenticatable implements JWTSubject
     // Relasi dengan table comment
     public function comments() { // user dapat memiliki banyak comment di banyak article
         return $this->hasMany(Comment::class);
+    }
+
+    public function article() {
+        return $this->hasMany(Article::class);
     }
 
 

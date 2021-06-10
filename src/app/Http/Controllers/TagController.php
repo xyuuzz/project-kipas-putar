@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use App\Http\Middleware\Admin;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(Admin::class)->except("index");
+    }
+
     /**
-     * Display a listing of the resource.
+     * Return All Tags
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return response()->json(["content" => Tag::get(["tag", "slug"])]);
     }
 
     /**
@@ -25,31 +31,16 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        // * validate
+        $request->validate([
+            "tag" => "required|unique:tags"
+        ]);
+        Tag::create([
+            "tag" => $request->tag,
+            "slug" => \Str::slug($request->tag)
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tag $tag)
-    {
-        $data = $tag->articles()->get();
-        return response()->json([compact("data"), "status" => true], 200);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tag $tag)
-    {
-        //
+        return response()->json(["status" => "success", "tags" => Tag::get(["tag", "slug"])]);
     }
 
     /**
@@ -60,6 +51,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->articles()->detach(); // * delete article tag contain that tag would delete
+        $tag->delete();
+        return response()->json(["status" => "success", "tags" => Tag::get(["tag", "slug"])]);
     }
 }

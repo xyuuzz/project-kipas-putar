@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Profile extends Model
 {
     // use HasFactory;
-    protected $fillable = ["photo_profile", "status", "slug", "user_id"];
+    protected $fillable = ["photo_profile", "status", "slug"];
 
 
     // Relasi dengan table User

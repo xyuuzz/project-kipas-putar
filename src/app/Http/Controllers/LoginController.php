@@ -24,7 +24,7 @@ class LoginController extends Controller
 
         // Jika client yang mencoba login tidak ada data nya di database, maka berikan response 401
         if(!$token = Auth::attempt($request->only("username", "password"))) {
-            return response(null, 401);
+            return response(["message" => "undefined user"]);
         }
 
         return response()->json(compact('token'));

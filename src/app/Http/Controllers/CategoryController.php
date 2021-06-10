@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(["content" => Category::get(["category", "slug"])]);
     }
 
     /**
@@ -26,12 +26,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if(count(Category::where("category", $request->category)->get())) {
-            return response()->json(["status" => false], 200);
-        }
+        // if(count(Category::where("category", $request->category)->get())) {
+        //     return response()->json(["status" => false, "message" => "Category "]);
+        // }
 
         $request->validate([
-            "category" => "required|string"
+            "category" => "required|string|min:4|unique:categories"
         ]);
 
         Category::create([
@@ -39,32 +39,7 @@ class CategoryController extends Controller
             'slug' => \Str::slug($request->category)
         ]);
 
-
-        return response()->json(['status' => true], 200);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        $data = $category->articles()->get();
-        return response()->json([compact("data"), "status" => true], 200);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
-    {
-
+        return response()->json( ["status" => true,"content" => Category::get(["category", "slug"])] );
     }
 
     /**
@@ -75,14 +50,19 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if(count($category->articles()->get())) {
-            $category->articles()->first()->comments()->delete();
-
-            $category->articles()->delete();
+        // cek apakah category punya article
+        // loop article
+        // hapus realasi tag yang dimiliki setiap article yang di loop
+        // lalu hapus article
+        // hapus category
+        if($category->article()->count()) {
+            if($category->article->tags()->count()) {
+                $category->article()->tags()->detach();
+            }
+            $category->article()->delete();
         }
 
         $category->delete();
-
-        return response()->json(['status' => true], 200);
+        return response()->json( ["status" => true,"content" => Category::get(["category", "slug"])] );
     }
 }

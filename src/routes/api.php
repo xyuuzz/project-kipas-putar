@@ -1,30 +1,38 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{RegisterController, LoginController, LogoutController, GetAllController};
+use App\Http\Controllers\{CategoryController, ArticleController, RegisterController, LoginController, LogoutController, GetAllController, ProfileController, TagController};
 // use App\Http\Controllers\{RegisterController, LoginController, LogoutController, ProfileController, ArticleController, CategoryController, CommentController, ArticleIndexController, GetAllArticleController, TagController, GetAllCategoriesController, GetAllController};
 
-
-Route::post("login", LoginController::class);
-Route::post("register", RegisterController::class);
-Route::get("logout", LogoutController::class)->middleware("auth:api");
+Route::post("login", LoginController::class)->name("login");
+Route::post("register", RegisterController::class)->name("register");
+Route::get("logout", LogoutController::class)->middleware("auth:api")->name("logout");
 
 
 // ------------------------------------------------------------------------------ //
 
-Route::get("articles", [GetAllController::class, "articles"])->name("articles"); // ! get all articles
-Route::get("categories", [GetAllController::class, "categories"])->name("categories"); // ! get all categories
-Route::get("tags", [GetAllController::class, "tags"])->name("tags"); // ! get all tags
+Route::get("profiles/{user:slug}", [ProfileController::class, "show"])->name("profile.show");
+Route::patch("profiles/{user:slug}", [ProfileController::class, "update"])->name("profile.update");
 
-Route::get("article/category/{category:slug}", [GetAllController::class, "articles_by_category"])->name("category_articles"); // ! get all articles by category
-Route::get("article/tag/{tag:slug}", [GetAllController::class, "articles_by_tag"])->name("tag_articles"); // ! get all articles by tag
+Route::get("articles/category/{category:slug}", [ArticleController::class, "articles_by_category"])->name("articles.by.category");
+Route::get("articles/tag/{tag:slug}", [ArticleController::class, "articles_by_tag"])->name("articles.by.tag");
+Route::resource("articles", ArticleController::class)
+    ->except(["edit"])
+    ->scoped(["article" => "slug"]);
+
+Route::resource("tags", TagController::class)
+    ->only(["store", "destroy", "index"])
+    ->scoped(["tag" => "slug"]);
+
+Route::resource("categories", CategoryController::class)
+    ->only(["store", "destroy", "index"])
+    ->scoped(["category" => "slug"]);
 
 
 // Route Article
 // Route::get("article/all", [ArticleIndexController::class, "index"]);
 // Route Show Article
 // Route::get("article/{article:slug}", [ArticleIndexController::class, "show"]);
-
 
 // Route Komentar
 // Route::get("article/comment/all/{article:slug}", [CommentController::class, "show"]);
@@ -80,7 +88,5 @@ Route::get("article/tag/{tag:slug}", [GetAllController::class, "articles_by_tag"
 //     Route::delete("delete/comment/{comment:id}", [CommentController::class, "destroy"]);
 //     // untuk update komen
 //     Route::patch("update/comment/{comment:id}", [CommentController::class, "update"]);
-
-
 
 // });
