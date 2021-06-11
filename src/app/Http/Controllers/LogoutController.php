@@ -19,6 +19,6 @@ class LogoutController extends Controller
         Auth::logout();
 
         // Untuk memberi response
-        return response("Anda Sudah terlogout", 200);
+        return response()->json(["status" => "sucess"]);
     }
 }

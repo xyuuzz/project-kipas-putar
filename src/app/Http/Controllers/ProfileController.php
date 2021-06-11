@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\{User, Profile};
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\ProfileResource;
 
@@ -37,21 +38,21 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request, User $user)
     {
-        $request->validate();
 
         $user->update([
             "name" => $request?->name,
             "email" => $request?->email,
             "username" => $request?->username,
-            "password" => bcrypt($request?->password)
+            "password" => Hash::make($request?->password)
         ]);
+
         $user->profile()->update([
             "status" => $request?->status,
             "photo_profile" => $request?->photo_profile ?? $user->profile->photo_profile,
-            "hobi" => $request?->hobi,
+            "hobi" => $request?->hobi
         ]);
 
-        return response()->json(["content" => new ProfileResource($user->profile)], 200);
+        return response()->json(["content" => new ProfileResource($user->profile)]);
     }
 
 }

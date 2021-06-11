@@ -16,7 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return response()->json(["content" => new ArticleResource(Article::latest()->get())]);
+        return response()->json(["content" => $this->resourceArticleArray(Article::latest()->get())]);
     }
 
     /**
@@ -36,7 +36,7 @@ class ArticleController extends Controller
         ]);
 
         $article = Auth::user()->article()->create([
-            "category_id" => Category::firstWhere("category", $request->category)->id,
+            "category_id" => $request->category,
             "title" => $request->title,
             "slug" => \Str::slug($request->title),
             "thumbnail" => $request->thumbnail,
@@ -45,7 +45,7 @@ class ArticleController extends Controller
 
         $article->tags()->attach($request->tags);
 
-        return response()->json(["status" => "success", "content" => null ]);
+        return response()->json(["status" => "success", "content" => $this->resourceArticleArray(Article::latest()->get())]);
     }
 
     /**
@@ -56,7 +56,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return response()->json(["content" => new ArticleResource($article)]);
+        return response()->json(["content" => $this->resourceArticleModel($article)]);
     }
 
     /**
@@ -77,7 +77,7 @@ class ArticleController extends Controller
         ]);
 
         $article->update([
-            "category_id" => Category::firstWhere("category", $request->category)->id,
+            "category_id" => $request->category,
             "title" => $request->title,
             "slug" => \Str::slug($request->title),
             "thumbnail" => $request->thumbnail,
@@ -86,7 +86,7 @@ class ArticleController extends Controller
 
         $article->tags()->attach($request->tags);
 
-        return response()->json(["status" => "success", "content" => null ]);
+        return response()->json(["status" => "success", "content" => $this->resourceArticleModel($article) ]);
     }
 
     /**
@@ -100,17 +100,47 @@ class ArticleController extends Controller
         $article->tags()->detach();
         $article->delete();
 
-        return response()->json(["status" => "success", "content" => null ]);
+        return response()->json(["status" => "success", "content" => $this->resourceArticleArray(Article::latest()->get())]);
     }
 
 
     public function articles_by_category(Category $category)
     {
-        return response()->json(["content" => new ArticleResource($category->article()->latest()->get())]);
+        return response()->json(["content" => $this->resourceArticleArray($category->article()->latest()->get())]);
     }
 
     public function articles_by_tag(Tag $tag)
     {
-        return response()->json(["content" => new ArticleResource($tag->articles()->latest()->get())]);
+        return response()->json(["content" => $this->resourceArticleArray($tag->articles()->latest()->get())]);
     }
+
+    protected function resourceArticleArray($data)
+    {
+        $articles = [];
+        foreach ($data as $article) {
+            array_push($articles, [
+                "slug" => $article->slug,
+                "category" => $article->category()->get(["category", "slug"]),
+                "title" => $article->title,
+                "thumbnail" => $article->thumbnail,
+                "description" => \Str::limit($article->description, 150, '...'),
+                "date_release" => $article->created_at
+            ]);
+        }
+        return $articles;
+    }
+
+    protected function resourceArticleModel($data)
+    {
+        return [
+            "slug" => $data->slug,
+            "category" => $data->category()->get(["category", "slug"]),
+            "title" => $data->title,
+            "thumbnail" => $data->thumbnail,
+            "description" => \Str::limit($data->description, 150, '...'),
+            "date_release" => $data->created_at,
+            "tags" => $data->tags()->get(["tag", "slug"])
+        ];
+    }
+
 }

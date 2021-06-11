@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Profile extends Model
 {
-    // use HasFactory;
-    protected $fillable = ["photo_profile", "status", "slug"];
+    protected $fillable = ["photo_profile", "status", "hobi"];
 
 
     // Relasi dengan table User

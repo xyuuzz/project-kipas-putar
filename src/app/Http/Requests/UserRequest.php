@@ -27,9 +27,10 @@ class UserRequest extends FormRequest
             "name" => "required|string|min:5|max:50",
             "username" => "required|alpha_num|min:5|max:25",
             "email" => "required|email|min:4|max:30",
-            "password" => "required|string|confirmed|min:6|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/|",
+            "password" => "required|string|confirmed|min:6",
             "status" => "required|string"
         ];
+        // regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/|
     }
 
     /*
@@ -50,7 +51,7 @@ class UserRequest extends FormRequest
             "email.min" => "Email Must greather than 4 font",
             "email.max" => "Email Must less than 30 font",
             "password.min" => "Password must greather than 6 font",
-            "password.regex" => "Use a Unique Password!"
+            // "password.regex" => "Use a Unique Password!"
         ];
     }
 }

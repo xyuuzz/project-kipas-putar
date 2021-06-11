@@ -8,10 +8,10 @@ use App\Http\Middleware\Admin;
 
 class TagController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(Admin::class)->except("index");
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(Admin::class)->except("index");
+    // }
 
     /**
      * Return All Tags
@@ -35,6 +35,7 @@ class TagController extends Controller
         $request->validate([
             "tag" => "required|unique:tags"
         ]);
+
         Tag::create([
             "tag" => $request->tag,
             "slug" => \Str::slug($request->tag)
