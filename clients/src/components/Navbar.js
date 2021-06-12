@@ -63,6 +63,9 @@ const Navbar = () => {
               <NavLink className="nav-link" aria-current="page" to="/">
                 Baca
               </NavLink>
+              <NavLink className="nav-link" to="/make/article">
+                Buat
+              </NavLink>
               <NavLink className="nav-link" to="/home">
                 Tentang
               </NavLink>
