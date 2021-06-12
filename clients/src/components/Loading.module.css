@@ -1,0 +1,26 @@
+@keyframes Spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.loading {
+  padding-top: 0px;
+  padding-bottom: 50px;
+  transition: all linear 20s;
+  animation-name: Spinner;
+  animation-duration: 0.7s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}

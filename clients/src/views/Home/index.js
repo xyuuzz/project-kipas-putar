@@ -14,15 +14,15 @@ import Hero from "../../components/Hero";
 
 const Home = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    document.title = "Tentang Kipas Putar";
-  }, []);
+  useEffect(() => (document.title = "Tentang Kipas Putar"), []);
   return (
     <>
       <Hero
-        image={process.env.PUBLIC_URL + "/Background%20About.png"}
-        title1="Kipas Angin Kosmos Wadesdes"
-        title2="Satu Kipas Nempel di Kipas Kipas"
+        image={process.env.PUBLIC_URL + "/Background_About.png"}
+        title1="Kebebasan untuk Gagal"
+        title2="Membuatmu Sukses"
+        textAlign="left"
+        letterSpacing="3x"
       />
 
       <section id={`${style.about}`}>

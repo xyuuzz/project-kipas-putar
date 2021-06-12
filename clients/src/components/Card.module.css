@@ -4,7 +4,7 @@
 }
 
 .card:hover {
-  cursor: pointer;
+  cursor: default;
   transition: 0.3s all linear;
   background-color: #fafafafa !important;
 }

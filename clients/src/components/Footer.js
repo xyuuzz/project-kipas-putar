@@ -21,7 +21,7 @@ const Footer = () => {
           </div>
           <div className={`${style.footer3} ${style.footerColumn}`}>
             <FooterColumn
-              title="Blog"
+              title="Kategori"
               text1="Trending"
               text2="Teknologi"
               text3="Pendidikan"

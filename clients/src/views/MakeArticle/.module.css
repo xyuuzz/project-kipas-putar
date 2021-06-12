@@ -1,0 +1,7 @@
+.app {
+  margin-top: 100px;
+  z-index: 100;
+  position: relative;
+  padding-top: 100px;
+  padding-bottom: 2000px;
+}
